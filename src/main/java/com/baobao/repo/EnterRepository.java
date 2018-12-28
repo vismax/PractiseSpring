@@ -26,7 +26,7 @@ public class EnterRepository {
         }
     }
 
-    public  ResultSet queryEnter(String x){
+    public  static ResultSet queryEnter(String x){
         try{
 //            创建执行sql的statement
             PreparedStatement statement= connection.prepareStatement("select*from Enter where Username = ?");

@@ -3,10 +3,7 @@ package com.baobao.repo;
 import com.baobao.model.Book;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +42,8 @@ public class BookRepository {
         while(set.next()){
             Book book = new Book();
             book.setId(set.getInt("id"));
-            book.setBookname(set.getString("bookname"));
-            book.setPrice(set.getInt("price"));
+            book.setBookName(set.getString("bookname"));
+            book.setPrice(set.getString("price"));
 
             books.add(book);
 
@@ -64,12 +61,12 @@ public class BookRepository {
 
     public static void insertBook(Book book){
         try {
-            if(connection == null){
-                init();
-            }
-            Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO BookManage(Bookname,Price)Values('"+book.getBookname()+"',"+book.getPrice()+")");
+            PreparedStatement statement=connection.prepareStatement("INSERT INTO BookManage(Bookname,Price)Values(?,?);");
+            statement.setString(1,book.getBookName());
+            statement.setString(2,book.getPrice());
+            statement.execute();
             statement.close();
+
 
 
         }catch(Exception e){

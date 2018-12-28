@@ -2,6 +2,8 @@ package com.baobao.filters;
 
 
 
+import com.baobao.repo.EnterRepository;
+
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -38,40 +40,51 @@ public class FilterLogin implements Filter {
                 Cookie[] cookies = ((HttpServletRequest) servletRequest).getCookies();
                 String username = null;
                 String password = null;
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("username")) {
-                        username = cookie.getValue();
-                    } else if (cookie.getName().equals("password")) {
-                        password = cookie.getValue();
-                    }
-                }
-                if (username == null || password == null) {
+
+                if(cookies==null){
                     printNoPermission(servletResponse);
-                    return;
-                } else {
-//                    ResultSet resultSet = EnterRepository.queryEnter(username);
-//                    if(resultSet.next()){
-//                        if (password.equals(resultSet.getString("password"))) {
-//                            ((HttpServletRequest) servletRequest).setAttribute("username",username);
-//
-//                            filterChain.doFilter(servletRequest, servletResponse);
-//                        } else {
-//                            printNoPermission(servletResponse);
-//
-//                            return;
-//
-//
-//                        }
-//
-//                    }else{
-//                        printNoPermission(servletResponse);
-//
-//                        return;
-//
-//                    }
 
+                    return;
+
+                }else{
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("username")) {
+                            username = cookie.getValue();
+                        } else if (cookie.getName().equals("password")) {
+                            password = cookie.getValue();
+                        }
+                    }
+                    if (username == null || password == null) {
+                        printNoPermission(servletResponse);
+                        return;
+                    } else {
+                        ResultSet resultSet = EnterRepository.queryEnter(username);
+                        if(resultSet.next()){
+                            if (password.equals(resultSet.getString("password"))) {
+                                ((HttpServletRequest) servletRequest).setAttribute("username",username);
+
+                                filterChain.doFilter(servletRequest, servletResponse);
+                            } else {
+                                printNoPermission(servletResponse);
+
+                                return;
+
+
+                            }
+
+                        }else{
+                            printNoPermission(servletResponse);
+
+                            return;
+
+                        }
+
+
+                    }
 
                 }
+
+
 
 
             }

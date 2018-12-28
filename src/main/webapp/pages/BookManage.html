@@ -17,8 +17,8 @@
 <body>
 <form name="form1" method="post" action=""   id="formID" >
 
-    <p> BookName <input type="text" placeholder="请输入书名" name = "input"></p>
-    <p> Price    <input type="text" placeholder="请输入价格" name = "input"></p>
+    <p> BookName <input type="text" placeholder="请输入书名" name = "bookName"></p>
+    <p> Price    <input type="text" placeholder="请输入价格" name = "price"></p>
 
     <input id = "tijiao" type="button" value="Send &raquo;"> </p>
 </form>
@@ -46,7 +46,7 @@
             {
                 type: 'POST',
                 url: '/practice/book',
-                data : $('#formID').serialize(),
+                data :  JSON.stringify($('#formID').serializeObject()),
                 contentType : 'application/json',
                 success : function (data) {
                     alert (data);

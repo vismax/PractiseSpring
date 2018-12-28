@@ -8,14 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.sql.ResultSet;
+
 
 @Controller
 public class BookController {
@@ -25,9 +18,7 @@ public class BookController {
 
    @ResponseBody
    @RequestMapping(value = "/practice/book")
-    public String book(@RequestBody Book book,
-                       HttpServletResponse resp){
-       ResultSet result=null;
+    public String book(@RequestBody Book book){
 
        try{
 
@@ -43,10 +34,6 @@ public class BookController {
 
 
    }
-
-
-
-
 
 
 

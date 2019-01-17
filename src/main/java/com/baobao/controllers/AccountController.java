@@ -1,11 +1,14 @@
 package com.baobao.controllers;
 
+import com.baobao.dao.AccountMapper;
 import com.baobao.model.Account;
+import com.baobao.po.AccountBookPO;
 import com.baobao.repo.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AccountController {
 
     @Autowired
-    private AccountRepository repo;
+    private AccountMapper accountMapper;
+
+
 
     @ResponseBody
     @RequestMapping(value="/practice/input")
@@ -22,7 +27,7 @@ public class AccountController {
     public String input(@RequestBody Account account){
 
         try {
-             repo.insertAccount(account);
+//             repo.insertAccount(account);
 
 
             return "success";
@@ -30,6 +35,25 @@ public class AccountController {
         }catch (Exception e){
             e.printStackTrace();
             return e.getMessage();
+
+        }
+
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value="/testAccount")
+
+    public AccountBookPO input1(@RequestParam("id") int id){
+
+        try {
+            return accountMapper.getAccount(id);
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
 
         }
 

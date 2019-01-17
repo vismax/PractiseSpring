@@ -41,7 +41,7 @@
     <filter-class>com.baobao.filters.FilterLogin</filter-class>
     <init-param>
       <param-name>exclude</param-name>
-      <param-value>/pages/Enter.html,/practice/enter,/practice/login,/index.jsp,/practice/book</param-value>
+      <param-value>/pages/Enter.html,/practice/enter,/practice/login,/index.jsp,/testAccount</param-value>
     </init-param>
   </filter>
 
@@ -53,6 +53,11 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+
+  <!--<context-param>-->
+    <!--<param-name>contextConfigLocation</param-name>-->
+    <!--<param-value>spring/context-*.xml</param-value>-->
+  <!--</context-param>-->
 
 
 

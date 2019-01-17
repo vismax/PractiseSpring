@@ -29,16 +29,13 @@ public class BookRepository {
             e.printStackTrace();
         }
     }
-    public static List<Book> queryBook(Integer id,String bookname ){
+    public static List<Book> queryBook(String bookName ){
         List<Book> books = new ArrayList();
         try {
-            Statement statement=connection.createStatement();
-             ResultSet set;
-        if(id != null){
-            set = statement.executeQuery("select * from BookManage where id= "+id);
-        }else{
-            set= statement.executeQuery("select * from BookManage where bookname="+ bookname);
-        }
+            PreparedStatement statement=connection.prepareStatement("select * from BookMange where bookName =?");
+            statement.setString(1,bookName);
+             ResultSet set= statement.executeQuery();
+
         while(set.next()){
             Book book = new Book();
             book.setId(set.getInt("id"));
@@ -61,9 +58,10 @@ public class BookRepository {
 
     public static void insertBook(Book book){
         try {
-            PreparedStatement statement=connection.prepareStatement("INSERT INTO BookManage(Bookname,Price)Values(?,?);");
+            PreparedStatement statement=connection.prepareStatement("INSERT INTO BookManage(Bookname,Price,UserName)Values(?,?);");
             statement.setString(1,book.getBookName());
             statement.setString(2,book.getPrice());
+
             statement.execute();
             statement.close();
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baobao.dao.SysUserRoleMapper">
+
+
+    <resultMap id="userRoleMap" type="com.baobao.model.SysUserRole">
+        <result property="userId" column="user_id"/>
+        <result property="roleId" column="role_id"/>
+    </resultMap>
+
+    <select id="selectByUserId" parameterType="Long" resultMap="userRoleMap">
+        select user_Id,role_id from sys_user_role where user_id = #{userid}
+    </select>
+
+    <resultMap id="privilegeMap" type="com.baobao.model.SysPrivilege">
+        <result property="privilegeId" column="privilegeid"/>
+        <result property="privilegeName" column="privilege_name"/>
+        <result property="privilegeUrl" column="privilege_url"/>
+    </resultMap>
+    <select id="selectPrivilegeIdsIdsByUserId" resultMap="privilegeMap">
+        select sys_privilege.privilegeid,sys_privilege.privilege_name,sys_privilege.privilege_url
+        from (sys_user_role inner join sys_role_privilege on sys_user_role.role_id=sys_role_privilege.roleid)
+        inner join sys_privilege on sys_role_privilege.privilegeid = sys_privilege.privilegeid
+        where sys_user_role.user_id =  #{userid}
+
+    </select>
+
+
+
+
+
+
+</mapper>
+
